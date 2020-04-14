@@ -1,6 +1,55 @@
-body,button,input,textarea,select {
-  color: forestgreen;
+
+.viewport * {
+  color: limegreen;
+  border-color: limegreen;
+  scrollbar-color: darkolivegreen darkseagreen;
+  border-radius: 10px;
 }
 
+.viewport {
+  border-style: double double double none;
+  border-color: limegreen;
+  border-radius: 10px;
+}
 
+.filter * {
+  color: forestgreen;
+  border-color: darkgreen;
+  scrollbar-color: olive;
+  border-radius: 5px;
+}
+
+.filter {
+  border:solid;
+  border-radius: 10px;
+  border-color: darkgreen;
+}
+
+.bigtext, .bigtext * {
+  color: darkolivegreen;
+  background-color: honeydew;
+}
+
+.runpane * {
+  font-weight: bold;
+  color: limegreen;
+  border-color: limegreen;
+  border-radius: 5px;
+}
+
+.runpane{
+  border-style: double none double double;
+  border-radius: 10px;
+  border-color: limegreen;
+}
+
+.runpane button {
+  background-color: mintcream;
+  color: limegreen;
+}
+
+.rundates {
+  cols: 10;
+  max-height: 80%;
+}
 

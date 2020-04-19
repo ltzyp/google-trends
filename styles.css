@@ -1,55 +1,115 @@
-
-.viewport * {
-  color: limegreen;
-  border-color: limegreen;
-  scrollbar-color: darkolivegreen darkseagreen;
-  border-radius: 10px;
+//:root {
+  --forecolor: limegreen;
+  --backcolor: white;
+  --control-forecolor: darkgreen;
+  --control-backcolor: mintcream;
+  --text-forecolor: darkolivegreen;
+  --text-backcolor: honeydew;
+  --button-forecolor: var(--forecolor);
+  --button-backcolor: var(---control-backcolor);
 }
 
-.viewport {
-  border-style: double double double none;
-  border-color: limegreen;
-  border-radius: 10px;
+:root {
+  --forecolor: orange;
+  --backcolor: white;
+  --control-forecolor: darkmagenta;
+  --control-backcolor: mistyrose;
+  --text-forecolor: plum;
+  --text-backcolor: lavender;
+  --button-forecolor: var(--forecolor);
+  --button-backcolor: var(---control-backcolor);
 }
 
-.filter * {
-  color: forestgreen;
-  border-color: darkgreen;
-  scrollbar-color: olive;
-  border-radius: 5px;
+
+.top-container {
+  display: flex;
 }
+
+.control {
+  width:30% ;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 
 .filter {
   border:solid;
   border-radius: 10px;
-  border-color: darkgreen;
+  border-color: var(--control-forecolor);
+  background-color: var(--control-backcolor);
+  display:inline-block;
+}
+
+
+.filter * {
+  color: var(--control-forecolor);
+  border-color: var(--control-forecolor);
+  scrollbar-color: var(--control-forecolor);
+  border-radius: 5px;
+}
+
+
+.iKeywords {
+  display:flex;
+  flex-direction:row; 
+}
+ 
+.small-controls {
+  max-height:30px;
+  font-size: 12px;
+  size: 8; 
+  display:block;
 }
 
 .bigtext, .bigtext * {
-  color: darkolivegreen;
-  background-color: honeydew;
+  color: var(--text-forecolor);
+  background-color: var(--text-backcolor);
+  width: 50%;
 }
 
 .runpane * {
   font-weight: bold;
-  color: limegreen;
-  border-color: limegreen;
+  color: var(--forecolor);
+  border-color: var(--forecolor);
   border-radius: 5px;
 }
 
 .runpane{
   border-style: double none double double;
   border-radius: 10px;
-  border-color: limegreen;
+  border-color: var(--forecolor);
+  display:flex; 
+  height:24px;
+  float:bottom;
 }
 
 .runpane button {
-  background-color: mintcream;
-  color: limegreen;
+  background-color: var(--button-backcolor);
+  color: var(--button-forecolor);
 }
 
 .rundates {
   cols: 10;
   max-height: 80%;
+  font: normal 9px Calibri;
 }
 
+.viewport {
+  border-style: double double double none;
+  border-color: var(--forecolor);
+  border-radius: 10px;
+  width: 70%;
+}
+
+.viewport * {
+  color: var(--forecolor);
+  border-color: var(--forecolor);
+  scrollbar-color: var(--control-forecolor) var(--text-backcolor);
+  border-radius: 10px;
+}
+
+.map-buttons {
+  display: flex;
+  justify-content: space-between; 
+}

@@ -84,6 +84,7 @@
     var options = {
         region: geo,
         colorAxis: { minValue:0, maxValue:100, colors: ['red','honeydew', 'blue'], datalessRegionColor: 'indigo'},
+        animation: { duration: 2000 }
       };
 //options.region='155';
 
@@ -229,58 +230,49 @@
    }                    // onVisualizationLoad
     </script>
   </head>
-  <body>
-     <table>
-        <tr>
-        <td  id="controls" style="border: dotted">
-          <table style="width:240px  vertical-align:top" class="filter">
-          <tr><td><label >geo region:</label></td>
-              <td> <input type="text" id="iGeo"/></td>
-          </tr><tr><td><label >resolution:</label></td>
-              <td> <select id="iResolution"/></td>
-          </tr><tr style="height:300pх "><td>  
-               <label >keywords set 1:</label><br>
-               <textarea id="i1Keywords" class="bigtext" rows="10" cols="32"></textarea>
-           </td> <td>  
-               <label >keywords set 2:</label><br>
-               <textarea id="i2Keywords" class="bigtext" rows="10" cols="32"></textarea>
-           </td></tr><tr><td>
+  <body  id="body" class="top-container">
+      <div  id="controls" class="control" >
+        <div id="filters"  class="filter" >
+          <div class="small-controls" >
+            <label >geo region:</label><input type="text" id="iGeo"/>
+            <label >resolution:</label><select id="iResolution"></select> 
+          </div>
+          <div id="iKeywords" class="iKeywords">
+            <div class="bigtext">
+              <label >keywords set 1:</label><br>
+              <textarea id="i1Keywords" rows="8" cols="32"></textarea>
+            </div>
+            <div class="bigtext">  
+                 <label >keywords set 2:</label><br>
+                 <textarea id="i2Keywords" rows="8" cols="32"></textarea>
+            </div>
+          </div>  
+         <div class="small-controls">  
               <button id="bRefresh">Refresh</button>
-           </td></tr>
-           </table>
-          <br>            <div/> <br>
-          <table class="runpane" style="height:24px vertical-align:bottom">
-            <tr >
-              <td><button id="bHome">Home</button></td>
-              <td><input type="date" id="iStart" class="rundates" /></td>         
-              <td><button id="bPrev">Prev</button></td>
-              <td><button id="bGO">GO!</button></td>
-              <td><button id="bNext">Next</button></td>
-              <td><input type="date" id="iStop" class="rundates"/></td>         
-              <td><button id="bEnd">End</button></td>
-            </tr>
-          </table>
-        </td>
-
-          <td class="viewport" style="width:900px">
-          <table>
-            <tr><th id="yearHeader" style="text-align: center; width:100%">Year</th></tr>
-            <tr>
-               <td><button id="bChart">Map</button></td>
-               <td><button id="bText">Table</button></td>
-               <td><button id="b1Samples">Samples set 1</button></td>
-               <td><button id="b2Samples">Samples set 2</button></td>
-            </tr>
-            <tr style="max-height:800px"><td colspan="5" >
-              <div id="mainframe" >
+          </div>
+       </div><br>
+        <div class="runpane">
+              <button id="bHome">Home</button>
+               <input type="date" id="iStart" class="rundates" />        
+               <button id="bPrev">Prev</button>
+               <button id="bGO">GO!</button>
+               <button id="bNext">Next</button>
+               <input type="date" id="iStop" class="rundates"/>         
+               <button id="bEnd">End</button>
+        </div>
+      </div>
+      <div class="viewport" ">
+        <div id="yearHeader" >Year</div>
+        <div class="map-buttons">
+                 <button id="bChart">Map</button>
+                 <button id="bText">Table</button>
+                 <button id="b1Samples">Samples set 1</button>
+                 <button id="b2Samples">Samples set 2</button>
+        </div>
+                <div id="mainframe" style="max-height:800px" >
                 <div id="regions_div" style="margin-left: auto; margin-right: auto;display: none;"></div>
                 <div id="got_text" class="bigtext" style="line-height:2em;overflow:scroll;padding:2px; max-height:400px; display: block"> </div>
                </div>
-            </td></tr>
-          </table>
-        </td>
-        </tr>
-      </table>
-
-   </body>
+    </div>
+  </body>
 </html>

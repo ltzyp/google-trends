@@ -70,6 +70,8 @@ console.log("JS started");
         var iStart = document.getElementById('iStart');
         var iStop = document.getElementById('iStop');
 
+        var img = document.getElementById('img');
+
 //    let keywords = ['лікар','врач'];
 //    let geo = 'UA';    
 //    let keywords = ['лікар','врач'];
@@ -102,6 +104,9 @@ console.log("JS started");
     };    
 
     var chart = new google.visualization.GeoChart(regions_div);
+    google.visualization.events.addListener(chart,'ready',function() {
+      img.innerHTML = '<img src="'+chart.getImageURI()+'">'
+    });
 
 /*
     function drawChart() {
@@ -169,7 +174,7 @@ console.log("JS started");
                 var  data =  google.visualization.arrayToDataTable(selection);
                      options.title=  stage.toString( '-->' );
                      chart.draw(data, options);
-               got_text.innerHTML = json.envelopHTML( ['<table >%s</table>','<tr>%s</tr>','<td color="darkolivegreen">%s</td>']);
+                got_text.innerHTML = json.envelopHTML( ['<table >%s</table>','<tr>%s</tr>','<td color="darkolivegreen">%s</td>']);
              });
   	    });
     } ;

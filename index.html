@@ -2,6 +2,8 @@
   <head>
     <link rel="stylesheet" href="styles.css">
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="helpers.js"></script>
+    <script type="text/javascript" src="Animated_GIF-master/dist/Animated_GIF.js"></script>
     <script type="text/javascript" src="index.js"></script>
 
   </head>
@@ -25,8 +27,9 @@
          <div class="small-controls">  
               <button id="bRefresh">Refresh</button>
           </div>
-       </div><br>
-        <div class="runpane">
+       </div>
+      <div id="got_text" class="bigtext" style="line-height:2em; max-height:400px; display: block"> </div>
+      <div class="runpane">
               <button id="bHome">Home</button>
                <input type="date" id="iStart" class="rundates" />        
                <button id="bPrev">Prev</button>
@@ -39,17 +42,24 @@
       </div>
       <div class="viewport" ">
         <div id="yearHeader" >Year</div>
-        <div class="map-buttons">
-                 <button id="bChart">Map</button>
-                 <button id="bText">Table</button>
-                 <button id="b1Samples">Samples set 1</button>
-                 <button id="b2Samples">Samples set 2</button>
-        </div>
-                <div id="mainframe" style="max-height:800px" >
-                <div id="regions_div" style="margin-left: auto; margin-right: auto;display: none;"></div>
-                <div id="got_text" class="bigtext" style="line-height:2em;overflow:scroll;padding:2px; max-height:400px; display: block"> </div>
-               </div>
-                <div id="img">IMG</img>
+            <div class="map-buttons">
+                     <button id="bChart">Map</button>
+                     <button id="bText">Table</button>
+                     <button id="b1Samples">Samples set 1</button>
+                     <button id="b2Samples">Samples set 2</button>
+            </div>
+        <div id="mainframe" class="picture" >
+ <!--               <img id="jpng1" src="img/usa-messi-ronaldo-201001.png" />
+                <img id="jpng2" src="img/usa-messi-ronaldo-201004.png" />
+                <img id="jpng3" src="img/usa-messi-ronaldo-201007.png" />
+                <img id="jpng4" src="img/usa-messi-ronaldo-201010.png" />
+ -->       </div>
+        <div id="png" class="png" > 
+        </div> 
+        <div id="gif" class="png" > 
+                <img id="aGIF" /> 
+       </div> 
+      </div>
     </div>
   </body>
 </html>

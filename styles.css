@@ -18,6 +18,8 @@
   --text-backcolor: lavender;
   --button-forecolor: var(--forecolor);
   --button-backcolor: var(---control-backcolor);
+  --render-forecolor: pink;
+  --control-backcolor: lavenderblush;
 }
 
 
@@ -53,6 +55,7 @@
 .iKeywords {
   display:flex;
   flex-direction:row; 
+  justify-content: space-around;
 }
  
 .small-controls {
@@ -65,8 +68,14 @@
 .bigtext, .bigtext * {
   color: var(--text-forecolor);
   background-color: var(--text-backcolor);
-  width: 50%;
 }
+
+.bigtext {
+  padding-left: 2;   
+  padding-right: 2;  
+  overflow:scroll; 
+}
+
 
 .runpane * {
   font-weight: bold;
@@ -97,16 +106,39 @@
 
 .viewport {
   border-style: double double double none;
+  display:flex;
+  flex-direction: column;
   border-color: var(--forecolor);
   border-radius: 10px;
   width: 70%;
 }
 
-.viewport * {
+.picture {
+  border-style: dotted;
+  border-color: var(--control-forecolor);
+  border-radius: 5px;
+  display:flex;  
+  flex-direction: row;
+  max-height: 400px;  
+}
+
+.png {
+  border-style: dotted;
+  border-color: var(--png-forecolor);
+  border-radius: 5px;
+  display:flex;  
+  flex-direction: row;
+  max-height: 400px;  
+}
+
+
+.svg {
   color: var(--forecolor);
   border-color: var(--forecolor);
   scrollbar-color: var(--control-forecolor) var(--text-backcolor);
   border-radius: 10px;
+  margin-left: auto;
+  moargin-right: auto;    
 }
 
 .map-buttons {

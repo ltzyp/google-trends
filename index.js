@@ -5,29 +5,9 @@ console.log("JS started");
          //See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
         ,'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
 */      });
-    Array.prototype.envelopHTML = function( templates ) {      
-        let t = templates[0];
-        let formats = templates.slice(1,4);
-        let h = '';
-        this.forEach ( (e) => {
-            if( Array.isArray(e) ) {
-                    h = h + e.envelopHTML( formats );
-                } else {
-                    let es = e.toString;
-                    h = h + formats[0].replace('%s', e.toString());
-                };          
-        });
-        return t.replace('%s',h);         
-    } 
-
-    Date.prototype.YYYYMMDD  =function() {
-       let d = this.getDate();
-       let m = this.getMonth()+1;
-       let y = this.getFullYear();
-        console.log('day '+d);
-       return y+'-'+(m<10?'0':'')+m+'-'+(d<10?'0':'')+d;  
-    }
-
+    const iWidth = 320;
+    const iHeight= 200;
+    const months = new Map();
     let start = new Date('2010-01-01');      
     let stop = new Date(Date.now());      
     let turn = 3;   
@@ -43,6 +23,7 @@ console.log("JS started");
     stage.shift = function( months ) {
         this.begin.setMonth( this.begin.getMonth()+ months );       
     }
+    stage.id = function() { return this.begin.YYYYMMDD() };
     stage.toString= function(sep ) {
         return [this.begin.YYYYMMDD(),this.end().YYYYMMDD()].join(sep);
     }
@@ -69,7 +50,7 @@ console.log("JS started");
         var i2Keywords = document.getElementById('i2Keywords');
         var iStart = document.getElementById('iStart');
         var iStop = document.getElementById('iStop');
-
+        var aGIF = document.getElementById('aGIF');
         var img = document.getElementById('img');
 
 //    let keywords = ['лікар','врач'];
@@ -83,8 +64,10 @@ console.log("JS started");
 
     var options = {
         region: geo,
+        width: iWidth,
+        height: iHeight,
+        legend: 'top',
         colorAxis: { minValue:0, maxValue:100, colors: ['red','honeydew', 'blue'], datalessRegionColor: 'indigo'},
-        animation: { duration: 2000 }
       };
 //options.region='155';
 
@@ -103,30 +86,9 @@ console.log("JS started");
         return [ all_resolutions[1] ];
     };    
 
-    var chart = new google.visualization.GeoChart(regions_div);
-    google.visualization.events.addListener(chart,'ready',function() {
-      img.innerHTML = '<img src="'+chart.getImageURI()+'">'
-    });
-
-/*
-    function drawChart() {
-
-     var selection = data1.map( a => [ a[0], a[step+1]  ] );
-     var  data =  google.visualization.arrayToDataTable(selection);
-      // Disabling the button while the chart is drawing.
-      button.disabled = true;
-     google.visualization.events.addListener(chart, 'ready',
-          function() {
-            button.disabled = false;
-         }
-      );
-       eTitle.textContent=selection[0][1];	
-      chart.draw(data, options);
-    }
-*/
     function restart() {
         stage.begin = start ;
-        drawData();        
+        drawData(stage);        
     }
 
     function remapSelectElement(el, newOptions ) {
@@ -142,7 +104,46 @@ console.log("JS started");
        console.log("select options "+el.options);    
     }
 
-    function drawData() {
+/*
+   function createChartElement( container,month,display = "none") { 
+      var chart = new google.visualization.GeoChart(element_id(container,month) );
+      google.visualization.events.addListener(chart,'ready',function() {
+            chart.attribute() = chart.getImageURI();
+      };  
+    });
+
+    
+   );
+
+    async function animate( path, animStage, stepStage ) {
+        let imgRefs = new Map();
+        animStage.forEach( (stage ) => { 
+            createChartElement(container,month,display:none);    
+            let await result = drawData(path,stepStage);
+            );
+        });
+        await Promise.all( ( ) {
+        }); 
+        let gifQueryPath = getPath(imgRefs,'','&');
+        await composeGIF(gifQueryPath);
+    }
+*/
+    function drawData(stage ) {
+    let container = document.createElement("div") ;
+        container.textContent = stage.toString( '-->' );
+        mainframe.appendChild(container);
+        container.setAttribute("month",stage.id());
+    var chart = new google.visualization.GeoChart(container);
+        google.visualization.events.addListener(chart,'ready',function() {
+    let month =chart.container.getAttribute('month'); 
+
+    let pngImage = document.createElement("img") ;
+        png.appendChild(pngImage);
+        pngImage.setAttribute("month",month);
+        pngImage.src=chart.getImageURI();
+        months.set( month ,{ svg: container, png: pngImage }) ;
+    });  
+
     let path = 'http://localhost:3080/api';
 
         console.log(stage.begin);
@@ -172,18 +173,50 @@ console.log("JS started");
                 var selection =[['Region',keywords[0]]].concat(  json.map( a => [ a[0], a[1]  ] ));
                     console.log(selection);
                 var  data =  google.visualization.arrayToDataTable(selection);
-                     options.title=  stage.toString( '-->' );
+                     options["title"]= stage.toString( '-->' );
                      chart.draw(data, options);
                 got_text.innerHTML = json.envelopHTML( ['<table >%s</table>','<tr>%s</tr>','<td color="darkolivegreen">%s</td>']);
              });
   	    });
     } ;
    
-   drawData();
+   drawData(stage);
+ //  testGIF();
+   function testGIF() {
+    var imgs = document.querySelectorAll('img');
+     var ag = new Animated_GIF(); 
+     ag.setSize(iWidth, iHeight);
+
+     imgs.forEach( (img) => {
+          ag.addFrame( img );
+     });
+    
+     ag.getBase64GIF(function(image) {
+         aGIF.src = image;
+    //     png.appendChild(animatedImage);
+     });
+
+    }
+
+   function composeGIF() {
+     var ag = new Animated_GIF(); 
+     ag.setSize(iWidth, iHeight);
+
+       months.forEach( function(month ) {
+          console.log('month: '+month);
+          ag.addFrame( month['png'] );
+     });
+   
+     ag.getBase64GIF(function(image) {
+         aGIF.src = image;
+  //       viewport.appendChild(animatedImage);
+     });
+
+    }
 
    function move(val ) {
       stage.shift(val);
-      drawData();
+      drawData(stage);
    }
 
    buttonGO.onclick = function() {
@@ -204,7 +237,6 @@ console.log("JS started");
 
     buttonNext.onclick = function() {
         move(turn);
-        drawData();
       }
 
     buttonPrev.onclick = function() {
@@ -213,9 +245,15 @@ console.log("JS started");
 
 
     buttonEnd.onclick = function() {
-        drawData();
+        drawData(stage);
     }
 
+    buttonChart.onclick = function() {
+        composeGIF();
+    }  
+
+   
+/*
     buttonChart.onclick = function() {
         regions_div.style.display= 'block';
         got_text.style.display= 'none';
@@ -225,7 +263,7 @@ console.log("JS started");
         regions_div.style.display= 'none';
         got_text.style.display= 'block';
       }  
-
+*/
     buttonRefresh.onclick = function() {
        geo=iGeo.value;      
        options.region=geo;
@@ -234,7 +272,7 @@ console.log("JS started");
        keywords[1]=i2Keywords.value.replace(/\r?\n/g,"+");
        start = new Date(iStart.value);
        stop = new Date(iStop.value); 
-       drawData(); 
+       drawData(stage); 
       }  
 
    }                    // onVisualizationLoad

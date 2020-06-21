@@ -104,30 +104,6 @@ console.log("JS started");
        console.log("select options "+el.options);    
     }
 
-/*
-   function createChartElement( container,month,display = "none") { 
-      var chart = new google.visualization.GeoChart(element_id(container,month) );
-      google.visualization.events.addListener(chart,'ready',function() {
-            chart.attribute() = chart.getImageURI();
-      };  
-    });
-
-    
-   );
-
-    async function animate( path, animStage, stepStage ) {
-        let imgRefs = new Map();
-        animStage.forEach( (stage ) => { 
-            createChartElement(container,month,display:none);    
-            let await result = drawData(path,stepStage);
-            );
-        });
-        await Promise.all( ( ) {
-        }); 
-        let gifQueryPath = getPath(imgRefs,'','&');
-        await composeGIF(gifQueryPath);
-    }
-*/
     function drawData(stage ) {
     let container = document.createElement("div") ;
         container.textContent = stage.toString( '-->' );
@@ -136,13 +112,14 @@ console.log("JS started");
     var chart = new google.visualization.GeoChart(container);
         google.visualization.events.addListener(chart,'ready',function() {
     let month =chart.container.getAttribute('month'); 
-
+        months.set(month,chart );
+/*
     let pngImage = document.createElement("img") ;
         png.appendChild(pngImage);
-        pngImage.setAttribute("month",month);
+        pngImage.setAttribute("month",month)
         pngImage.src=chart.getImageURI();
         months.set( month ,{ svg: container, png: pngImage }) ;
-    });  
+*/    });  
 
     let path = 'http://localhost:3080/api';
 
@@ -186,6 +163,7 @@ console.log("JS started");
     var imgs = document.querySelectorAll('img');
      var ag = new Animated_GIF(); 
      ag.setSize(iWidth, iHeight);
+     a.sampleInterval = 4;   
 
      imgs.forEach( (img) => {
           ag.addFrame( img );
@@ -198,19 +176,56 @@ console.log("JS started");
 
     }
 
-   function composeGIF() {
-     var ag = new Animated_GIF(); 
-     ag.setSize(iWidth, iHeight);
+    function loadImage(img,src) {
+        return new Promise((res,rej) => {
+             img.onload = function() { 
+                ag.addFrame(img);
+                 res(img )
+             } ; 
+             img.onerror = rej;
+             img.src = src;
+        })
+    }
 
-       months.forEach( function(month ) {
-          console.log('month: '+month);
-          ag.addFrame( month['png'] );
-     });
-   
-     ag.getBase64GIF(function(image) {
-         aGIF.src = image;
-  //       viewport.appendChild(animatedImage);
-     });
+   async function composeGIF() {
+       var ag = new Animated_GIF(); 
+          ag.setSize(iWidth, iHeight);
+       let pngImage = document.createElement("img") ;
+       let charts = Array.from(months.values());
+
+       for (const ch of charts ) {  
+            let pr = new Promise((resolve,reject) => {  
+            pngImage.onload = function() {
+                let canvas = document.createElement("canvas") ;
+                let ctx = canvas.getContext('2d');
+                ctx.drawImage(this,0,0);  
+                let month = ch.container.getAttribute('month');
+//                let left = 'left'; i1Keywords.value;
+//                let right = i2Keywords value;
+                ctx.font = '18px calibri';
+                ctx.textBaseLine = 'top' ;
+                ctx.fillStyle = 'blue';
+                ctx.textAlign = 'left';
+                ctx.fillText('left',0,10); 
+                ctx.textAlign = 'center';       
+                ctx.fillStyle = 'green';
+                ctx.fillText(''+month,canvas.width/2,10);
+                ctx.textAlign = 'right';
+                ctx.fillStyle = 'red';
+                ctx.fillText('right',canvas.width,10);    
+
+                ag.addFrame(canvas);
+                resolve(); 
+              }; 
+            }); 
+           let uri = ch.getImageURI();     
+           pngImage.src = uri; 
+          await pr; 
+       };
+
+       ag.getBase64GIF(function(image) {
+           aGIF.src = image;
+        });
 
     }
 

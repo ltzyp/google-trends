@@ -25,7 +25,14 @@
                 };          
         });
         return t.replace('%s',h);         
-    } 
+    }
+ 
+    Array.prototype.asyncForEach = async function (fn) {
+      for (let i = 0; i < this.length; i++) {
+        let pr= fn(this[i], i);
+        await pr;
+      }
+    };
 
     Date.prototype.YYYYMMDD  =function() {
        let d = this.getDate();

@@ -1,0 +1,28 @@
+﻿<html>
+  <head>
+    <link rel="stylesheet" href="query-params-pane.css">
+    <script type="text/javascript" src="helpers.js"></script>
+  </head>  
+  <body>
+      <div  id="controls" class="control" >
+        <div id="filters"  class="filter" >
+          <div class="small-controls" >
+            <label >geo region:</label><input type="text" id="iGeo" class="query-param"/>
+            <label >resolution:</label><select id="iResolution" class="query-param"></select> 
+          </div>
+          <div id="iKeywords" class="iKeywords">
+            <div class="bigtext">
+              <label >keywords set 1:</label><br>
+              <textarea id="iKeywords-1" class="query-param" rows="8" cols="32"></textarea>
+            </div>
+            <div class="bigtext">  
+                 <label >keywords set 2:</label><br>
+                 <textarea id="iKeywords-2" class="query-param" rows="8" cols="32"></textarea>
+            </div>
+          </div>  
+         <div class="small-controls">  
+              <button id="bRefresh">Refresh</button>
+          </div>
+       </div>
+   </body>
+</html>

@@ -1,0 +1,66 @@
+//:root {
+  --forecolor: limegreen;
+  --backcolor: white;
+  --control-forecolor: darkgreen;
+  --control-backcolor: mintcream;
+  --text-forecolor: darkolivegreen;
+  --text-backcolor: honeydew;
+  --button-forecolor: var(--forecolor);
+  --button-backcolor: var(---control-backcolor);
+}
+
+:root {
+  --forecolor: orange;
+  --backcolor: white;
+  --control-forecolor: darkmagenta;
+  --control-backcolor: mistyrose;
+  --text-forecolor: plum;
+  --text-backcolor: lavender;
+  --button-forecolor: var(--forecolor);
+  --button-backcolor: var(---control-backcolor);
+  --render-forecolor: pink;
+  --control-backcolor: lavenderblush;
+}
+
+
+.filter {
+  border:solid;
+  border-radius: 10px;
+  border-color: var(--control-forecolor);
+  background-color: var(--control-backcolor);
+  display:inline-block;
+}
+
+
+.filter * {
+  color: var(--control-forecolor);
+  border-color: var(--control-forecolor);
+  scrollbar-color: var(--control-forecolor);
+  border-radius: 5px;
+}
+
+
+.iKeywords {
+  display:flex;
+  flex-direction:row; 
+  justify-content: space-around;
+}
+ 
+.small-controls {
+  max-height:30px;
+  font-size: 12px;
+  size: 8; 
+  display:block;
+}
+
+.bigtext, .bigtext * {
+  color: var(--text-forecolor);
+  background-color: var(--text-backcolor);
+}
+
+.bigtext {
+  padding-left: 2;   
+  padding-right: 2;  
+  overflow:scroll; 
+}
+

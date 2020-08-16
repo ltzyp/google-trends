@@ -30,6 +30,29 @@ console.log("JS started");
 
     google.charts.setOnLoadCallback(onVisualizationLoad);
 
+    class DataCircuit  {
+        constructor( name,id ) {
+            element = document.getElementById(tag+id+name);
+        }
+        getValue() { this.value = this.element.value };
+        setValue() { this.element.value = this.value };
+        innerSeparator() {  return ',' };
+        outerSeparator() {  return '='};
+        clause() {}
+    }
+
+    class DataCircuitPool {
+        constructor( name, array ) {
+            this.pool = new Array ;
+            let i= 0;
+            array.forEach( (e ) => { 
+               this.pool.push( DataCircuit new(name ,i++ ) ); 
+            }
+        }
+        integralSeparator = '&';
+        clause() { this.pool.clauses.join(this.integralSeparator) }
+    }
+
     function onVisualizationLoad() {
         var regions_div =  document.getElementById('regions_div');
         var mainframe =  document.getElementById('mainframe');
@@ -48,6 +71,7 @@ console.log("JS started");
         var iResolution = document.getElementById('iResolution');
         var i1Keywords = document.getElementById('i1Keywords');
         var i2Keywords = document.getElementById('i2Keywords');
+let keywords = DataCircuit new( 'keywords','i1' );
         var iStart = document.getElementById('iStart');
         var iStop = document.getElementById('iStop');
         var aGIF = document.getElementById('aGIF');
@@ -113,13 +137,6 @@ console.log("JS started");
         google.visualization.events.addListener(chart,'ready',function() {
     let month =chart.container.getAttribute('month'); 
         months.set(month,chart );
-/*
-    let pngImage = document.createElement("img") ;
-        png.appendChild(pngImage);
-        pngImage.setAttribute("month",month)
-        pngImage.src=chart.getImageURI();
-        months.set( month ,{ svg: container, png: pngImage }) ;
-*/    });  
 
     let path = 'http://localhost:3080/api';
 
@@ -131,6 +148,7 @@ console.log("JS started");
         iResolution.value = resolutions.includes(resolution)? resolution : resolutions[0];  
 
         options.resolution= visualResolution(resolution);
+keywords.setValues( );
         i1Keywords.value = keywords[0].replace('+',"\n");  
         i2Keywords.value = keywords[1].replace('+',"\n");
         iStart.value = start.YYYYMMDD();
@@ -142,6 +160,8 @@ console.log("JS started");
     let datesClause = 'date='+stage.toString(',');
     let resolutionClause = 'resolution='+resolution;
     let url = path+'?'+[keywordsClause,geoClause,datesClause,resolutionClause].filter(Boolean).join('&'); 
+let url = path+'?'+[keywords.clause,geoClause,datesClause,resolutionClause].filter(Boolean).join('&'); 
+
         console.log(url);
 
     let result =  fetch(url).then(  (response) =>  {
@@ -285,6 +305,7 @@ console.log("JS started");
        resolution=iResolution.value;      
        keywords[0]=i1Keywords.value.replace(/\r?\n/g,"+"); 
        keywords[1]=i2Keywords.value.replace(/\r?\n/g,"+");
+keywords.getValues();
        start = new Date(iStart.value);
        stop = new Date(iStop.value); 
        drawData(stage); 
